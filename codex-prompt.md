@@ -31,3 +31,6 @@ From english, pinyin or hanzi phrase to a page that is dynamically loaded.
 * Use the Vercel AI SDK for AI features and Vercel AI SDK UI for the interface so we can easily make the chatbot(llms.txt/documentation is at vercel-ai-llms.txt)
 * Try to implement react's new ViewTransition animations to create cool transitions
 * 
+
+
+The gemini api key is saved at $VITE_GEMINI_API_KEY
