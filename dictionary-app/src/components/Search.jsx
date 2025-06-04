@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import data from '../data/dictionary.json';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-function normalizePinyin(pinyin) {
-  return pinyin.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
-}
 
 export default function Search() {
   const [query, setQuery] = useState('');
-  const results = data.filter(entry => {
-    const q = query.trim().toLowerCase();
-    if (!q) return false;
-    return (
-      entry.hanzi.includes(q) ||
-      entry.english.toLowerCase().includes(q) ||
-      normalizePinyin(entry.pinyin).includes(normalizePinyin(q))
-    );
-  });
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    if (!query.trim()) {
+      setResults([]);
+      return;
+    }
+    const controller = new AbortController();
+    fetch(`/api/search?q=${encodeURIComponent(query)}`, { signal: controller.signal })
+      .then(res => res.json())
+      .then(setResults)
+      .catch(() => {});
+    return () => controller.abort();
+  }, [query]);
 
   return (
     <div>
@@ -26,9 +26,9 @@ export default function Search() {
         placeholder="Search Hanzi, Pinyin or English"
       />
       <ul>
-        {results.map(r => (
-          <li key={r.hanzi}>
-            <Link to={`/character/${encodeURIComponent(r.hanzi)}`}>{r.hanzi} - {r.english}</Link>
+        {results.map((r, idx) => (
+          <li key={idx}>
+            <Link to={`/character/${encodeURIComponent(r.simplified)}`}>{r.simplified} - {r.english.join('; ')}</Link>
           </li>
         ))}
       </ul>

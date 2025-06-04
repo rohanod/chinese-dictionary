@@ -1,7 +1,11 @@
 # Chinese Dictionary App
 
 This is a small Mandarin dictionary built with **Vite** and **React**.
-It demonstrates basic search, translation using Gemini through the Vercel AI SDK and a simple chatbot interface.
+Dictionary data comes from the [`cedict-json`](https://npm.im/cedict-json) package
+and is served from an Express API together with extra information from
+[`hanzi`](https://npm.im/hanzi).
+The app demonstrates search, translation using Gemini through the Vercel AI SDK
+and a simple chatbot interface.
 
 ## Development
 
