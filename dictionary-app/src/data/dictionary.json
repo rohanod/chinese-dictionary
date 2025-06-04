@@ -1,0 +1,20 @@
+[
+  {
+    "hanzi": "你好",
+    "pinyin": "nǐ hǎo",
+    "english": "hello",
+    "literal": "you good",
+    "radicals": ["\u4ebb", "\u5973"],
+    "frequency": "common",
+    "examples": ["\u4f60\u597d!", "\u4f60\u597d\uff0c\u6b22\u8fce\u5149\u4e34"]
+  },
+  {
+    "hanzi": "中国",
+    "pinyin": "zhōng guó",
+    "english": "China",
+    "literal": "middle kingdom",
+    "radicals": ["\u4e2d", "\u56fd"],
+    "frequency": "common",
+    "examples": ["\u6211\u6765\u81ea\u4e2d\u56fd", "\u4e2d\u56fd\u53d1\u5c55\u8fc7\u7a0b"]
+  }
+]
