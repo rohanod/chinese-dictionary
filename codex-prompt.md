@@ -1,13 +1,14 @@
 Create a chinese(mandarin) dictionary website. It should be done in vite react. Make sure it has these features:
 
-## Search by:
+## Search by...
 * pinyin
 * hanzi
 * english phrase
 
 ## Translate
-From english, pinyin and hanzi to a page with this:
+From english, pinyin or hanzi phrase to a page that is dynamically loaded.
 
+## Character/Phrase page
 * Hanzi static image
 * Hanzi static image with stroke order numbers
 * Hanzi gif with stroke order
@@ -16,5 +17,15 @@ From english, pinyin and hanzi to a page with this:
 * English translation
 * Literal english translation
 * If it's a phrase, have different sections on the page for individual characters and the whole phrase(For whole phrase, make sure to modify the images and join them well or find a lib that you can just create an image to create an image of a whole phrase)
+* All the radicals from that character in a list of image links that the user can click on to view the character page for that radical
+* How often it's used
+* Audio recordings of the individual characters/words and of the whole phrase
+* Example sentences
 
-## 
+## AI Powered
+* Chatbot(Gemini 2.0 flash) with some useful tools. Allow it to use a tool to embed a useful thing. Make sure it will be able to use "Generative UI"
+
+
+
+## Libraries I want you to use
+* Vercel AI SDK for AI features and Vercel AI SDK UI for the interface so we can easily make the chatbot
