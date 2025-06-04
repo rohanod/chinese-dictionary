@@ -16,7 +16,7 @@ From english, pinyin or hanzi phrase to a page that is dynamically loaded.
 * Pinyin(with tones)
 * English translation
 * Literal english translation
-* If it's a phrase, have different sections on the page for individual characters and the whole phrase(For whole phrase, make sure to modify the images and join them well or find a lib that you can just create an image to create an image of a whole phrase)
+* If it's a phrase, have different sections on the page for individual characters and the whole phrase(For whole phrase, make sure to modify the images and join them well or find a lib that you can just create an image of a whole phrase)
 * All the radicals from that character in a list of image links that the user can click on to view the character page for that radical
 * How often it's used
 * Audio recordings of the individual characters/words and of the whole phrase
