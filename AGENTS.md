@@ -28,7 +28,7 @@ From english, pinyin or hanzi phrase to a page that is dynamically loaded.
 
 
 ## Requirements
-* Use the Vercel AI SDK for AI features and Vercel AI SDK UI for the interface so we can easily make the chatbot(llms.txt/documentation is at vercel-ai-llms.txt)
+* Use the Vercel AI SDK for AI features and Vercel AI SDK UI for the interface so we can easily make the chatbot(To get documentation, curl https://context7.com/vercel/ai/llms.txt?topic={topic})
 * Try to implement react's new ViewTransition animations to create cool transitions
 * 
 
