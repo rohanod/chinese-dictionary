@@ -1,9 +1,9 @@
 Create a chinese(mandarin) dictionary website. It should be done in vite react. Make sure it has these features:
 
 ## Search by...
-* pinyin
-* hanzi
-* english phrase
+* pinyin(fuzzy so tones not required)
+* hanzi(exact)
+* english word/phrase
 
 ## Translate
 From english, pinyin or hanzi phrase to a page that is dynamically loaded.
@@ -27,5 +27,7 @@ From english, pinyin or hanzi phrase to a page that is dynamically loaded.
 
 
 
-## Libraries I want you to use
-* Vercel AI SDK for AI features and Vercel AI SDK UI for the interface so we can easily make the chatbot
+## Requirements
+* Use the Vercel AI SDK for AI features and Vercel AI SDK UI for the interface so we can easily make the chatbot
+* Try to implement react's new ViewTransition animations to create cool transitions
+* 
