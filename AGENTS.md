@@ -33,4 +33,4 @@ From english, pinyin or hanzi phrase to a page that is dynamically loaded.
 * 
 
 
-The gemini api key is saved at $VITE_GEMINI_API_KEY
+Make sure it is compatible with the latest version of node(v24.1.0)
