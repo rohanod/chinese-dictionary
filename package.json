@@ -1,0 +1,18 @@
+{
+  "name": "chinese-dictionary-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "cd frontend && npm run build",
+    "lint": "cd frontend && npm run lint"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "vite": "^6.3.5"
+  },
+  "engines": {
+    "node": ">=24.1.0"
+  }
+}
