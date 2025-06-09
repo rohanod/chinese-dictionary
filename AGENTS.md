@@ -37,6 +37,8 @@ https://context7.com/{context7-id}/llms.txt?topic={topic}&tokens={tokens}
 
 Tokens is optional
 
+For HanziJS and Hanzi Writer, you can look through the documentation at docs/
+
 ## Context7 IDs
 * vitejs/vite
 * reactjs/react.dev
