@@ -51,3 +51,5 @@ Some things we are using aren't on context7 so I have made a file with the docs 
 - **React** – Component-based UI library using a virtual DOM for efficient state-driven rendering
 - **HanziJS** – Node.js library for CC-CEDICT lookup (hanzi→pinyin→English) and character decomposition (radicals, strokes, example words)
 - **Hanzi Writer** – JavaScript library for rendering static SVGs and animated stroke-order sequences for simplified and traditional Chinese characters
+
+First read the existing vite project at starter/ where you can modify the files to be for this dictionary.
