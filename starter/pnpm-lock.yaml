@@ -14,6 +14,12 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: 5.80.6
         version: 5.80.6(@tanstack/react-query@5.80.6(react@19.1.0))(react@19.1.0)
+      hanzi:
+        specifier: ^2.1.5
+        version: 2.1.5
+      hanzi-writer:
+        specifier: ^3.7.2
+        version: 3.7.2
       react:
         specifier: 19.1.0
         version: 19.1.0
@@ -1141,6 +1147,12 @@ packages:
   graphql@16.11.0:
     resolution: {integrity: sha512-mS1lbMsxgQj6hge1XZ6p7GPhbrtFwUFYi3wRzXAC/FmYnyXMTvvI3td3rjmQ2u8ewXueaSvRPWaEcgVVOT9Jnw==}
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
+
+  hanzi-writer@3.7.2:
+    resolution: {integrity: sha512-9v8V45rY4leG62qmq+c9MzjT4mPrVbFATv5tWWw3NucaxOO4bM/CiJ8qfPt/NOQuvWYhOhuHu6TzfjZ0ibY6jg==}
+
+  hanzi@2.1.5:
+    resolution: {integrity: sha512-kXLmMV39QStRX0L1VH7j+5sz8VvTWD2Igx4htQwicCopPZGCWXAqavbb+jG0kFVllGcE89K7pv2UvD+pURzwYQ==}
 
   happy-dom@17.6.3:
     resolution: {integrity: sha512-UVIHeVhxmxedbWPCfgS55Jg2rDfwf2BCKeylcPSqazLz5w3Kri7Q4xdBJubsr/+VUzFLh0VjIvh13RaDA2/Xug==}
@@ -2852,6 +2864,10 @@ snapshots:
   graceful-fs@4.2.11: {}
 
   graphql@16.11.0: {}
+
+  hanzi-writer@3.7.2: {}
+
+  hanzi@2.1.5: {}
 
   happy-dom@17.6.3:
     dependencies:
