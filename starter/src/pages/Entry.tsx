@@ -33,41 +33,49 @@ export function Entry() {
 
 	if (!first) {
 		return (
-			<div className='p-4'>
-				<TransitionLink to='/'>Back</TransitionLink>
-				<p>No entry found.</p>
+			<div className='min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-red-400 p-4 text-white'>
+				<div className='mx-auto max-w-xl rounded-xl bg-white/20 p-6 shadow-lg backdrop-blur'>
+					<TransitionLink className='underline' to='/'>
+						Back
+					</TransitionLink>
+					<p className='mt-4'>No entry found.</p>
+				</div>
 			</div>
 		)
 	}
 	return (
-		<div className='p-4'>
-			<TransitionLink className='text-blue-600 underline' to='/'>
-				Back
-			</TransitionLink>
-			<h1 className='my-4 font-bold text-3xl'>{first.simplified}</h1>
-			<button
-				className='mb-4 rounded bg-green-500 px-2 py-1 text-white'
-				onClick={() => word && add(word)}
-				type='button'
-			>
-				Save to My List
-			</button>
-			<div className='mb-4' ref={writerRef} />
-			<p>Pinyin: {first.pinyin}</p>
-			<p>Meaning: {first.definition}</p>
-			{freq && <p>Frequency rank: {freq.number}</p>}
-			{radicals && (
-				<div className='mt-4'>
-					<h2 className='font-bold'>Radicals:</h2>
-					<ul className='list-inside list-disc'>
-						{radicals.map((r: string) => (
-							<li key={r}>
-								<TransitionLink to={`/${r}`}>{r}</TransitionLink>
-							</li>
-						))}
-					</ul>
-				</div>
-			)}
+		<div className='min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-red-400 p-4 text-white'>
+			<div className='mx-auto max-w-xl rounded-xl bg-white/20 p-6 shadow-lg backdrop-blur'>
+				<TransitionLink className='underline' to='/'>
+					Back
+				</TransitionLink>
+				<h1 className='my-4 text-center font-extrabold text-5xl drop-shadow'>
+					{first.simplified}
+				</h1>
+				<button
+					className='mb-4 rounded bg-green-500/90 px-3 py-1 font-medium text-white hover:bg-green-600'
+					onClick={() => word && add(word)}
+					type='button'
+				>
+					Save to My List
+				</button>
+				<div className='mx-auto mb-4 flex justify-center' ref={writerRef} />
+				<p className='mb-1'>Pinyin: {first.pinyin}</p>
+				<p className='mb-1'>Meaning: {first.definition}</p>
+				{freq && <p className='mb-1'>Frequency rank: {freq.number}</p>}
+				{radicals && (
+					<div className='mt-4'>
+						<h2 className='font-bold'>Radicals:</h2>
+						<ul className='list-inside list-disc'>
+							{radicals.map((r: string) => (
+								<li key={r}>
+									<TransitionLink to={`/${r}`}>{r}</TransitionLink>
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
+			</div>
 		</div>
 	)
 }

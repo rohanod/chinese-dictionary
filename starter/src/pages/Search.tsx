@@ -27,33 +27,40 @@ export function Search() {
 	}
 
 	return (
-		<div className='p-4'>
-			<h1 className='mb-4 font-bold text-2xl'>Chinese Dictionary</h1>
-			<input
-				className='mr-2 border p-2'
-				onChange={e => setQuery(e.target.value)}
-				value={query}
-			/>
-			<button
-				className='rounded bg-blue-500 px-4 py-2 text-white'
-				onClick={onSearch}
-				type='button'
-			>
-				Search
-			</button>
-			<ul className='mt-4'>
-				{results.map(entries => (
-					<li className='mb-2' key={entries[0]?.simplified}>
-						<TransitionLink
-							className='text-blue-600 underline'
-							to={`/${entries[0]?.simplified}`}
-						>
-							{entries[0]?.simplified} - {entries[0]?.pinyin} -{' '}
-							{entries[0]?.definition}
-						</TransitionLink>
-					</li>
-				))}
-			</ul>
+		<div className='min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-red-400 p-4 text-white'>
+			<div className='mx-auto max-w-xl rounded-xl bg-white/20 p-6 shadow-lg backdrop-blur'>
+				<h1 className='mb-6 text-center font-extrabold text-4xl drop-shadow'>
+					Chinese Dictionary
+				</h1>
+				<div className='mb-6 flex flex-wrap gap-2'>
+					<input
+						className='flex-grow rounded border border-white/40 bg-white/80 px-4 py-2 text-gray-900 placeholder-gray-500'
+						onChange={e => setQuery(e.target.value)}
+						placeholder='Type hanzi, pinyin or English...'
+						value={query}
+					/>
+					<button
+						className='rounded bg-blue-500/90 px-4 py-2 font-medium text-white hover:bg-blue-600'
+						onClick={onSearch}
+						type='button'
+					>
+						Search
+					</button>
+				</div>
+				<ul className='space-y-2'>
+					{results.map(entries => (
+						<li key={entries[0]?.simplified}>
+							<TransitionLink
+								className='font-medium underline decoration-dotted hover:text-blue-200'
+								to={`/${entries[0]?.simplified}`}
+							>
+								{entries[0]?.simplified} - {entries[0]?.pinyin} -{' '}
+								{entries[0]?.definition}
+							</TransitionLink>
+						</li>
+					))}
+				</ul>
+			</div>
 		</div>
 	)
 }

@@ -59,7 +59,10 @@
 			"@tailwindcss/oxide",
 			"esbuild",
 			"msw"
-		]
+		],
+		"patchedDependencies": {
+			"hanzi@2.1.5": "patches/hanzi@2.1.5.patch"
+		}
 	},
 	"packageManager": "pnpm@10.11.1",
 	"msw": {

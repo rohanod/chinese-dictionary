@@ -3,3 +3,7 @@
 @theme {
 	--font-sans: Inter, sans-serif;
 }
+
+body {
+	@apply min-h-screen font-sans;
+}

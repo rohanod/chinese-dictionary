@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  hanzi@2.1.5:
+    hash: 0b6eea0286ff20dde608e9136406e415f6dabc141a4cc71b3abec730f89916d5
+    path: patches/hanzi@2.1.5.patch
+
 importers:
 
   .:
@@ -16,7 +21,7 @@ importers:
         version: 5.80.6(@tanstack/react-query@5.80.6(react@19.1.0))(react@19.1.0)
       hanzi:
         specifier: ^2.1.5
-        version: 2.1.5
+        version: 2.1.5(patch_hash=0b6eea0286ff20dde608e9136406e415f6dabc141a4cc71b3abec730f89916d5)
       hanzi-writer:
         specifier: ^3.7.2
         version: 3.7.2
@@ -2867,7 +2872,7 @@ snapshots:
 
   hanzi-writer@3.7.2: {}
 
-  hanzi@2.1.5: {}
+  hanzi@2.1.5(patch_hash=0b6eea0286ff20dde608e9136406e415f6dabc141a4cc71b3abec730f89916d5): {}
 
   happy-dom@17.6.3:
     dependencies:

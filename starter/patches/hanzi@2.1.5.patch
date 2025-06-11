@@ -1,0 +1,14 @@
+diff --git a/lib/dictionary.js b/lib/dictionary.js
+index 747ce832fe5e95d299d7a77db324e6c72b4ba857..4a13d43f669752b9edaa5eed4c3713664c400bda 100644
+--- a/lib/dictionary.js
++++ b/lib/dictionary.js
+@@ -9,6 +9,9 @@ var phonetic_set_two = {};
+ var Segmenter = require('./segmenter.js').LongestMatchSegmenter;
+ var segmenter = new Segmenter(definitionLookup);
+ 
++// Define variable for frequency loader to work under strict mode
++var lines;
++
+ function start() {
+   console.log('Hanzi is compiling dictionary...');
+ 
