@@ -1,26 +1,37 @@
-import {LoadingOrError} from 'components/LoadingOrError'
-import {Gallery} from 'pages/Gallery'
-import {lazy, Suspense} from 'react'
-import {ErrorBoundary, type FallbackProps} from 'react-error-boundary'
-import {Route, Routes} from 'react-router'
+import { LoadingOrError } from 'components/LoadingOrError'
+import { Navbar } from 'components/Navbar'
+import { Footer } from 'components/Footer'
+import { Home } from 'pages/Home'
+import { Search } from 'pages/Search'
+import { Translate } from 'pages/Translate'
+import { CharacterPage } from 'pages/CharacterPage'
+import { MyLists } from 'pages/MyLists'
+import { Suspense } from 'react'
+import { ErrorBoundary, type FallbackProps } from 'react-error-boundary'
+import { Route, Routes } from 'react-router'
 
-const Details = lazy(async () =>
-	import('pages/Details').then(m => ({default: m.Details}))
-)
-
-function renderError({error}: FallbackProps) {
+function renderError({ error }: FallbackProps) {
 	return <LoadingOrError error={error} />
 }
 
 export function App() {
 	return (
 		<ErrorBoundary fallbackRender={renderError}>
-			<Suspense fallback={<LoadingOrError />}>
-				<Routes>
-					<Route element={<Gallery />} index={true} />
-					<Route element={<Details />} path=':fruitName' />
-				</Routes>
-			</Suspense>
+			<div className="flex flex-col min-h-screen">
+				<Navbar />
+				<main className="flex-grow">
+					<Suspense fallback={<LoadingOrError />}>
+						<Routes>
+							<Route element={<Home />} index={true} />
+							<Route element={<Search />} path="/search" />
+							<Route element={<Translate />} path="/translate" />
+							<Route element={<CharacterPage />} path="/character/:term" />
+							<Route element={<MyLists />} path="/lists" />
+						</Routes>
+					</Suspense>
+				</main>
+				<Footer />
+			</div>
 		</ErrorBoundary>
 	)
 }

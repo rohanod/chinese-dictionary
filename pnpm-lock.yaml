@@ -1,0 +1,30 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      chinese-lexicon:
+        specifier: ^1.0.43
+        version: 1.0.43
+      hanzi-writer:
+        specifier: ^3.7.2
+        version: 3.7.2
+
+packages:
+
+  chinese-lexicon@1.0.43:
+    resolution: {integrity: sha512-VwIpl0i4OHCYdn4P5cUdiy+PhKxEeBw0iYfpTLuti6gqr+NsmGZpkIeVsSAJgdXHjkcrJQNGnqtGntbtv0zPbQ==}
+
+  hanzi-writer@3.7.2:
+    resolution: {integrity: sha512-9v8V45rY4leG62qmq+c9MzjT4mPrVbFATv5tWWw3NucaxOO4bM/CiJ8qfPt/NOQuvWYhOhuHu6TzfjZ0ibY6jg==}
+
+snapshots:
+
+  chinese-lexicon@1.0.43: {}
+
+  hanzi-writer@3.7.2: {}

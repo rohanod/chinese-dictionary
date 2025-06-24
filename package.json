@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "chinese-lexicon": "^1.0.43",
+    "hanzi-writer": "^3.7.2"
+  }
+}
