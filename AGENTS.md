@@ -40,7 +40,7 @@ https://context7.com/{context7-id}/llms.txt?topic={topic}&tokens={tokens}
 
 Tokens is optional
 
-For HanziJS and Hanzi Writer, you can look through the documentation at docs/
+For chinese-lexicon and Hanzi Writer, you can look through the documentation at docs/
 
 ## Context7 IDs
 * vitejs/vite
@@ -52,7 +52,7 @@ Some things we are using aren't on context7 so I have made a file with the docs 
 # Libraries/Packages/Frameworks to use
 - **Vite** – Development and build tool for fast hot-reloads and optimized production bundles
 - **React** – Component-based UI library using a virtual DOM for efficient state-driven rendering
-- **HanziJS** – Node.js library for CC-CEDICT lookup (hanzi→pinyin→English) and character decomposition (radicals, strokes, example words)
+- **chinese-lexicon** – Node.js library for CC-CEDICT lookup (hanzi→pinyin→English) and character decomposition (radicals, strokes)
 - **Hanzi Writer** – JavaScript library for rendering static SVGs and animated stroke-order sequences for simplified and traditional Chinese characters
 
 First read the existing vite project at starter/ where you can modify the files to be for this dictionary.
