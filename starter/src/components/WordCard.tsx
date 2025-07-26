@@ -1,5 +1,9 @@
 import {Link} from 'react-router'
-import {removeFromLearned, removeFromLearning, addToLearned} from 'utils/storage'
+import {
+	addToLearned,
+	removeFromLearned,
+	removeFromLearning
+} from 'utils/storage'
 
 export interface WordCardProps {
 	word: string
@@ -7,7 +11,7 @@ export interface WordCardProps {
 	onUpdate: () => void
 }
 
-export function WordCard({ word, status, onUpdate }: WordCardProps) {
+export function WordCard({word, status, onUpdate}: WordCardProps) {
 	const handleRemove = () => {
 		if (status === 'learning') {
 			removeFromLearning(word)
@@ -25,42 +29,41 @@ export function WordCard({ word, status, onUpdate }: WordCardProps) {
 	}
 
 	return (
-		<div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow group">
-			<div className="text-center">
-				<Link
-					to={`/character/${word}`}
-					className="block"
-				>
-					<div className="text-3xl font-bold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-2">
+		<div className='group rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800'>
+			<div className='text-center'>
+				<Link className='block' to={`/character/${word}`}>
+					<div className='mb-2 font-bold text-3xl text-gray-800 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400'>
 						{word}
 					</div>
 				</Link>
-				
-				<div className="flex justify-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+
+				<div className='flex justify-center space-x-1 opacity-0 transition-opacity group-hover:opacity-100'>
 					{status === 'learning' && (
 						<button
+							className='rounded bg-green-600 px-2 py-1 text-white text-xs transition-colors hover:bg-green-700'
 							onClick={handleMarkLearned}
-							className="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded text-xs transition-colors"
-							title="Mark as learned"
+							title='Mark as learned'
 						>
 							✓ Learned
 						</button>
 					)}
-					
+
 					<button
+						className='rounded bg-red-600 px-2 py-1 text-white text-xs transition-colors hover:bg-red-700'
 						onClick={handleRemove}
-						className="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs transition-colors"
 						title={`Remove from ${status}`}
 					>
 						Remove
 					</button>
 				</div>
-				
-				<div className={`mt-2 text-xs px-2 py-1 rounded-full ${
-					status === 'learning' 
-						? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-						: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-				}`}>
+
+				<div
+					className={`mt-2 rounded-full px-2 py-1 text-xs ${
+						status === 'learning'
+							? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+							: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+					}`}
+				>
 					{status === 'learning' ? 'Learning' : 'Learned'}
 				</div>
 			</div>

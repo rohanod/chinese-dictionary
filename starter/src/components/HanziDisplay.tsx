@@ -1,6 +1,6 @@
-import {useState, useEffect, useRef, useCallback} from 'react'
+import type HanziWriter from 'hanzi-writer'
+import {useCallback, useEffect, useRef, useState} from 'react'
 import {hanziWriterManager} from 'utils/hanziWriter'
-import HanziWriter from 'hanzi-writer'
 
 export interface HanziDisplayProps {
 	character: string
@@ -8,13 +8,13 @@ export interface HanziDisplayProps {
 
 type DisplayMode = 'static' | 'stroke-order' | 'animation' | 'frames'
 
-export function HanziDisplay({ character }: HanziDisplayProps) {
+export function HanziDisplay({character}: HanziDisplayProps) {
 	const [displayMode, setDisplayMode] = useState<DisplayMode>('static')
 	const [isPlaying, setIsPlaying] = useState(false)
 	const [currentFrame, setCurrentFrame] = useState(0)
 	const [frames, setFrames] = useState<string[]>([])
 	const [writer, setWriter] = useState<HanziWriter | null>(null)
-	
+
 	const staticRef = useRef<HTMLDivElement>(null)
 	const strokeOrderRef = useRef<HTMLDivElement>(null)
 	const animationRef = useRef<HTMLDivElement>(null)
@@ -26,24 +26,30 @@ export function HanziDisplay({ character }: HanziDisplayProps) {
 			try {
 				// For multi-character words, only show the first character in detail
 				const displayChar = character.length > 1 ? character[0] : character
-				
-				if (!displayChar) return
-				
+
+				if (!displayChar) {
+					return
+				}
+
 				if (staticRef.current) {
 					staticRef.current.innerHTML = ''
-					await hanziWriterManager.createStaticCharacter(staticRef.current, displayChar, {
-						width: 200,
-						height: 200,
-						padding: 20,
-						showCharacter: true,
-						showOutline: false
-					})
+					await hanziWriterManager.createStaticCharacter(
+						staticRef.current,
+						displayChar,
+						{
+							width: 200,
+							height: 200,
+							padding: 20,
+							showCharacter: true,
+							showOutline: false
+						}
+					)
 				}
 
 				if (strokeOrderRef.current) {
 					strokeOrderRef.current.innerHTML = ''
 					await hanziWriterManager.createStrokeOrderCharacter(
-						strokeOrderRef.current, 
+						strokeOrderRef.current,
 						displayChar,
 						{
 							width: 200,
@@ -53,42 +59,39 @@ export function HanziDisplay({ character }: HanziDisplayProps) {
 							showOutline: true
 						}
 					)
-					
+
 					// Add stroke order numbers
 					await addStrokeOrderNumbers(strokeOrderRef.current, displayChar)
 				}
 
 				if (animationRef.current) {
 					animationRef.current.innerHTML = ''
-					const animationWriter = await hanziWriterManager.createAnimatedCharacter(
-						animationRef.current,
-						displayChar,
-						{
-							width: 200,
-							height: 200,
-							padding: 20,
-							showCharacter: false,
-							showOutline: true,
-							strokeAnimationSpeed: 1,
-							delayBetweenStrokes: 800
-						}
-					)
+					const animationWriter =
+						await hanziWriterManager.createAnimatedCharacter(
+							animationRef.current,
+							displayChar,
+							{
+								width: 200,
+								height: 200,
+								padding: 20,
+								showCharacter: false,
+								showOutline: true,
+								strokeAnimationSpeed: 1,
+								delayBetweenStrokes: 800
+							}
+						)
 					setWriter(animationWriter)
 				}
 
 				// Generate frames for step-by-step display
 				if (displayChar.length === 1) {
 					try {
-						const generatedFrames = await hanziWriterManager.generateStrokeFrames(displayChar)
+						const generatedFrames =
+							await hanziWriterManager.generateStrokeFrames(displayChar)
 						setFrames(generatedFrames)
-					} catch (error) {
-						console.error('Error generating frames:', error)
-					}
+					} catch (_error) {}
 				}
-
-			} catch (error) {
-				console.error('Error initializing HanziWriter:', error)
-			}
+			} catch (_error) {}
 		}
 
 		initializeWriters()
@@ -98,19 +101,30 @@ export function HanziDisplay({ character }: HanziDisplayProps) {
 		}
 	}, [character])
 
-	const addStrokeOrderNumbers = async (container: HTMLElement, char: string) => {
+	const addStrokeOrderNumbers = async (
+		container: HTMLElement,
+		char: string
+	) => {
 		try {
 			const charData = await hanziWriterManager.loadCharacterData(char)
 			const svg = container.querySelector('svg')
-			if (!svg || !charData.medians) return
+			if (!(svg && charData.medians)) {
+				return
+			}
 
 			charData.medians.forEach((median, index) => {
 				if (median && median.length > 0) {
 					const startPoint = median[0]
 					if (startPoint && startPoint.length >= 2) {
-						const text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+						const text = document.createElementNS(
+							'http://www.w3.org/2000/svg',
+							'text'
+						)
 						text.setAttribute('x', (startPoint[0]! * 0.125 + 20).toString())
-						text.setAttribute('y', (112.5 - startPoint[1]! * 0.125 + 5).toString())
+						text.setAttribute(
+							'y',
+							(112.5 - startPoint[1]! * 0.125 + 5).toString()
+						)
 						text.setAttribute('fill', '#FF6B6B')
 						text.setAttribute('font-size', '12')
 						text.setAttribute('font-weight', 'bold')
@@ -119,44 +133,48 @@ export function HanziDisplay({ character }: HanziDisplayProps) {
 					}
 				}
 			})
-		} catch (error) {
-			console.error('Error adding stroke order numbers:', error)
-		}
+		} catch (_error) {}
 	}
 
 	const handlePlayAnimation = useCallback(async () => {
-		if (!writer) return
+		if (!writer) {
+			return
+		}
 
 		setIsPlaying(true)
 		try {
 			await hanziWriterManager.animateCharacter(writer)
-		} catch (error) {
-			console.error('Animation error:', error)
+		} catch (_error) {
 		} finally {
 			setIsPlaying(false)
 		}
 	}, [writer])
 
 	const handleStopAnimation = useCallback(() => {
-		if (!writer) return
+		if (!writer) {
+			return
+		}
 		hanziWriterManager.stopAnimation(writer)
 		setIsPlaying(false)
 	}, [writer])
 
-	const handleFrameChange = useCallback((frameIndex: number) => {
-		setCurrentFrame(frameIndex)
-		if (frameRef.current && frames[frameIndex]) {
-			frameRef.current.innerHTML = frames[frameIndex]
-		}
-	}, [frames])
+	const handleFrameChange = useCallback(
+		(frameIndex: number) => {
+			setCurrentFrame(frameIndex)
+			if (frameRef.current && frames[frameIndex]) {
+				frameRef.current.innerHTML = frames[frameIndex]
+			}
+		},
+		[frames]
+	)
 
 	const renderDisplayModeContent = () => {
 		switch (displayMode) {
 			case 'static':
 				return (
-					<div className="text-center">
-						<div ref={staticRef} className="inline-block" />
-						<p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+					<div className='text-center'>
+						<div className='inline-block' ref={staticRef} />
+						<p className='mt-4 text-gray-600 text-sm dark:text-gray-400'>
 							Static character display
 						</p>
 					</div>
@@ -164,9 +182,9 @@ export function HanziDisplay({ character }: HanziDisplayProps) {
 
 			case 'stroke-order':
 				return (
-					<div className="text-center">
-						<div ref={strokeOrderRef} className="inline-block" />
-						<p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+					<div className='text-center'>
+						<div className='inline-block' ref={strokeOrderRef} />
+						<p className='mt-4 text-gray-600 text-sm dark:text-gray-400'>
 							Stroke order with numbers
 						</p>
 					</div>
@@ -174,26 +192,26 @@ export function HanziDisplay({ character }: HanziDisplayProps) {
 
 			case 'animation':
 				return (
-					<div className="text-center">
-						<div ref={animationRef} className="inline-block mb-4" />
-						<div className="flex justify-center space-x-4">
+					<div className='text-center'>
+						<div className='mb-4 inline-block' ref={animationRef} />
+						<div className='flex justify-center space-x-4'>
 							<button
-								onClick={handlePlayAnimation}
+								className='rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700 disabled:bg-gray-400'
 								disabled={isPlaying}
-								className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg transition-colors"
+								onClick={handlePlayAnimation}
 							>
 								{isPlaying ? 'Playing...' : 'Play Animation'}
 							</button>
 							{isPlaying && (
 								<button
+									className='rounded-lg bg-red-600 px-4 py-2 text-white transition-colors hover:bg-red-700'
 									onClick={handleStopAnimation}
-									className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors"
 								>
 									Stop
 								</button>
 							)}
 						</div>
-						<p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+						<p className='mt-4 text-gray-600 text-sm dark:text-gray-400'>
 							Animated stroke order sequence
 						</p>
 					</div>
@@ -201,42 +219,50 @@ export function HanziDisplay({ character }: HanziDisplayProps) {
 
 			case 'frames':
 				return (
-					<div className="text-center">
-						<div ref={frameRef} className="inline-block mb-4" />
+					<div className='text-center'>
+						<div className='mb-4 inline-block' ref={frameRef} />
 						{frames.length > 0 && (
-							<div className="space-y-4">
-								<div className="flex justify-center">
+							<div className='space-y-4'>
+								<div className='flex justify-center'>
 									<input
-										type="range"
-										min="0"
+										className='w-64'
 										max={frames.length - 1}
+										min='0'
+										onChange={e =>
+											handleFrameChange(Number.parseInt(e.target.value, 10))
+										}
+										type='range'
 										value={currentFrame}
-										onChange={(e) => handleFrameChange(parseInt(e.target.value))}
-										className="w-64"
 									/>
 								</div>
-								<div className="text-sm text-gray-600 dark:text-gray-400">
+								<div className='text-gray-600 text-sm dark:text-gray-400'>
 									Frame {currentFrame + 1} of {frames.length}
 								</div>
-								<div className="flex justify-center space-x-2">
+								<div className='flex justify-center space-x-2'>
 									<button
-										onClick={() => handleFrameChange(Math.max(0, currentFrame - 1))}
+										className='rounded bg-gray-600 px-3 py-1 text-white transition-colors hover:bg-gray-700 disabled:bg-gray-400'
 										disabled={currentFrame === 0}
-										className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-400 text-white px-3 py-1 rounded transition-colors"
+										onClick={() =>
+											handleFrameChange(Math.max(0, currentFrame - 1))
+										}
 									>
 										Previous
 									</button>
 									<button
-										onClick={() => handleFrameChange(Math.min(frames.length - 1, currentFrame + 1))}
+										className='rounded bg-gray-600 px-3 py-1 text-white transition-colors hover:bg-gray-700 disabled:bg-gray-400'
 										disabled={currentFrame === frames.length - 1}
-										className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-400 text-white px-3 py-1 rounded transition-colors"
+										onClick={() =>
+											handleFrameChange(
+												Math.min(frames.length - 1, currentFrame + 1)
+											)
+										}
 									>
 										Next
 									</button>
 								</div>
 							</div>
 						)}
-						<p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+						<p className='mt-4 text-gray-600 text-sm dark:text-gray-400'>
 							Step-by-step stroke progression
 						</p>
 					</div>
@@ -250,31 +276,33 @@ export function HanziDisplay({ character }: HanziDisplayProps) {
 	// Show message for multi-character words
 	if (character.length > 1) {
 		return (
-			<div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
-				<h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+			<div className='rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800'>
+				<h3 className='mb-4 font-semibold text-gray-800 text-lg dark:text-white'>
 					Character Display: {character}
 				</h3>
-				<div className="text-center mb-6">
-					<div className="text-6xl font-bold text-gray-800 dark:text-white mb-4">
+				<div className='mb-6 text-center'>
+					<div className='mb-4 font-bold text-6xl text-gray-800 dark:text-white'>
 						{character}
 					</div>
-					<p className="text-gray-600 dark:text-gray-400">
+					<p className='text-gray-600 dark:text-gray-400'>
 						Showing first character ({character[0]}) in detail below
 					</p>
 				</div>
-				
+
 				{/* Display Mode Selector */}
-				<div className="mb-6">
-					<div className="flex flex-wrap justify-center gap-2">
-						{(['static', 'stroke-order', 'animation', 'frames'] as DisplayMode[]).map((mode) => (
+				<div className='mb-6'>
+					<div className='flex flex-wrap justify-center gap-2'>
+						{(
+							['static', 'stroke-order', 'animation', 'frames'] as DisplayMode[]
+						).map(mode => (
 							<button
-								key={mode}
-								onClick={() => setDisplayMode(mode)}
-								className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+								className={`rounded-lg px-4 py-2 font-medium transition-colors ${
 									displayMode === mode
 										? 'bg-blue-600 text-white'
-										: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 hover:bg-blue-100 hover:text-blue-800'
+										: 'bg-gray-100 text-gray-800 hover:bg-blue-100 hover:text-blue-800 dark:bg-gray-700 dark:text-gray-200'
 								}`}
+								key={mode}
+								onClick={() => setDisplayMode(mode)}
 							>
 								{mode.charAt(0).toUpperCase() + mode.slice(1).replace('-', ' ')}
 							</button>
@@ -288,23 +316,25 @@ export function HanziDisplay({ character }: HanziDisplayProps) {
 	}
 
 	return (
-		<div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
-			<h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+		<div className='rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800'>
+			<h3 className='mb-4 font-semibold text-gray-800 text-lg dark:text-white'>
 				Character Display
 			</h3>
-			
+
 			{/* Display Mode Selector */}
-			<div className="mb-6">
-				<div className="flex flex-wrap justify-center gap-2">
-					{(['static', 'stroke-order', 'animation', 'frames'] as DisplayMode[]).map((mode) => (
+			<div className='mb-6'>
+				<div className='flex flex-wrap justify-center gap-2'>
+					{(
+						['static', 'stroke-order', 'animation', 'frames'] as DisplayMode[]
+					).map(mode => (
 						<button
-							key={mode}
-							onClick={() => setDisplayMode(mode)}
-							className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+							className={`rounded-lg px-4 py-2 font-medium transition-colors ${
 								displayMode === mode
 									? 'bg-blue-600 text-white'
-									: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 hover:bg-blue-100 hover:text-blue-800'
+									: 'bg-gray-100 text-gray-800 hover:bg-blue-100 hover:text-blue-800 dark:bg-gray-700 dark:text-gray-200'
 							}`}
+							key={mode}
+							onClick={() => setDisplayMode(mode)}
 						>
 							{mode.charAt(0).toUpperCase() + mode.slice(1).replace('-', ' ')}
 						</button>

@@ -1,20 +1,26 @@
 import {useSuspenseQuery} from '@tanstack/react-query'
 import {getCharacterData} from 'api/dictionary'
-import {Head} from 'components/Head'
-import {HanziDisplay} from 'components/HanziDisplay'
-import {CharacterInfo} from 'components/CharacterInfo'
-import {RadicalsList} from 'components/RadicalsList'
-import {ExampleSentences} from 'components/ExampleSentences'
 import {AudioPlayer} from 'components/AudioPlayer'
+import {CharacterInfo} from 'components/CharacterInfo'
+import {ExampleSentences} from 'components/ExampleSentences'
+import {HanziDisplay} from 'components/HanziDisplay'
+import {Head} from 'components/Head'
+import {RadicalsList} from 'components/RadicalsList'
+import {useCallback, useState} from 'react'
 import {Link, Navigate, useParams} from 'react-router'
-import {isWordLearned, isWordLearning, addToLearning, addToLearned, removeFromLearning} from 'utils/storage'
-import {useState, useCallback} from 'react'
+import {
+	addToLearned,
+	addToLearning,
+	isWordLearned,
+	isWordLearning,
+	removeFromLearning
+} from 'utils/storage'
 
 export function Character() {
 	const {word} = useParams()
-	
+
 	if (!word) {
-		return <Navigate replace={true} to="/" />
+		return <Navigate replace={true} to='/' />
 	}
 
 	const {data: characterData} = useSuspenseQuery({
@@ -47,46 +53,58 @@ export function Character() {
 
 	return (
 		<>
-			<Head title={`${word} - ${primaryEntry?.definitions[0] || 'Chinese Dictionary'}`} />
-			<div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-				<div className="container mx-auto px-4 py-8">
+			<Head
+				title={`${word} - ${primaryEntry?.definitions[0] || 'Chinese Dictionary'}`}
+			/>
+			<div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
+				<div className='container mx-auto px-4 py-8'>
 					{/* Header */}
-					<header className="mb-8">
-						<div className="flex items-center justify-between mb-6">
+					<header className='mb-8'>
+						<div className='mb-6 flex items-center justify-between'>
 							<Link
-								to="/search"
-								className="flex items-center text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+								className='flex items-center text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
+								to='/search'
 							>
-								<svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+								<svg
+									className='mr-2 h-5 w-5'
+									fill='none'
+									stroke='currentColor'
+									viewBox='0 0 24 24'
+								>
+									<path
+										d='M15 19l-7-7 7-7'
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										strokeWidth={2}
+									/>
 								</svg>
 								Back to Search
 							</Link>
-							
-							<div className="flex items-center space-x-3">
+
+							<div className='flex items-center space-x-3'>
 								{/* Learning Status Buttons */}
 								<button
-									onClick={handleToggleLearning}
-									className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-										learning 
-											? 'bg-blue-600 text-white hover:bg-blue-700' 
-											: 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 hover:bg-blue-100 hover:text-blue-800'
+									className={`rounded-lg px-4 py-2 font-medium transition-colors ${
+										learning
+											? 'bg-blue-600 text-white hover:bg-blue-700'
+											: 'bg-gray-200 text-gray-800 hover:bg-blue-100 hover:text-blue-800 dark:bg-gray-700 dark:text-gray-200'
 									}`}
+									onClick={handleToggleLearning}
 								>
 									{learning ? 'Learning ✓' : 'Add to Learning'}
 								</button>
-								
+
 								{!learned && (
 									<button
+										className='rounded-lg bg-green-600 px-4 py-2 font-medium text-white transition-colors hover:bg-green-700'
 										onClick={handleMarkLearned}
-										className="px-4 py-2 rounded-lg font-medium bg-green-600 text-white hover:bg-green-700 transition-colors"
 									>
 										Mark as Learned
 									</button>
 								)}
-								
+
 								{learned && (
-									<span className="px-4 py-2 rounded-lg font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+									<span className='rounded-lg bg-green-100 px-4 py-2 font-medium text-green-800 dark:bg-green-900 dark:text-green-200'>
 										Learned ✓
 									</span>
 								)}
@@ -95,14 +113,14 @@ export function Character() {
 					</header>
 
 					{/* Main Content */}
-					<div className="grid lg:grid-cols-2 gap-8">
+					<div className='grid gap-8 lg:grid-cols-2'>
 						{/* Left Column - Character Display */}
-						<div className="space-y-8">
+						<div className='space-y-8'>
 							<HanziDisplay character={word} />
-							
+
 							{/* Audio Section */}
-							<div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
-								<h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+							<div className='rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800'>
+								<h3 className='mb-4 font-semibold text-gray-800 text-lg dark:text-white'>
 									Pronunciation
 								</h3>
 								<AudioPlayer character={word} pinyin={primaryEntry?.pinyin} />
@@ -110,8 +128,8 @@ export function Character() {
 
 							{/* Radicals Section */}
 							{characterData.radicals.length > 0 && (
-								<div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
-									<h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+								<div className='rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800'>
+									<h3 className='mb-4 font-semibold text-gray-800 text-lg dark:text-white'>
 										Related Radicals & Components
 									</h3>
 									<RadicalsList radicals={characterData.radicals} />
@@ -120,12 +138,12 @@ export function Character() {
 						</div>
 
 						{/* Right Column - Character Info */}
-						<div className="space-y-8">
+						<div className='space-y-8'>
 							<CharacterInfo characterData={characterData} />
-							
+
 							{/* Example Sentences */}
-							<div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
-								<h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+							<div className='rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800'>
+								<h3 className='mb-4 font-semibold text-gray-800 text-lg dark:text-white'>
 									Example Sentences
 								</h3>
 								<ExampleSentences character={word} />
@@ -135,22 +153,22 @@ export function Character() {
 
 					{/* Multi-Character Breakdown */}
 					{isMultiCharacter && (
-						<div className="mt-12">
-							<h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
+						<div className='mt-12'>
+							<h2 className='mb-6 font-bold text-2xl text-gray-800 dark:text-white'>
 								Character Breakdown
 							</h2>
-							<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+							<div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
 								{Array.from(word).map((char, index) => (
 									<Link
+										className='group rounded-lg bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:bg-gray-800'
 										key={`${char}-${index}`}
 										to={`/character/${char}`}
-										className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow group"
 									>
-										<div className="text-center">
-											<div className="text-4xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+										<div className='text-center'>
+											<div className='mb-2 font-bold text-4xl transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400'>
 												{char}
 											</div>
-											<div className="text-sm text-gray-600 dark:text-gray-400">
+											<div className='text-gray-600 text-sm dark:text-gray-400'>
 												Click to view details
 											</div>
 										</div>

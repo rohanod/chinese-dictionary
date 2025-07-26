@@ -26,9 +26,9 @@ export function App() {
 			<Suspense fallback={<LoadingOrError />}>
 				<Routes>
 					<Route element={<Home />} index={true} />
-					<Route element={<Search />} path="search" />
-					<Route element={<Character />} path="character/:word" />
-					<Route element={<Lists />} path="lists" />
+					<Route element={<Search />} path='search' />
+					<Route element={<Character />} path='character/:word' />
+					<Route element={<Lists />} path='lists' />
 				</Routes>
 			</Suspense>
 		</ErrorBoundary>

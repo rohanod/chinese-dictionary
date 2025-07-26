@@ -1,11 +1,11 @@
-import {useState, useCallback} from 'react'
+import {useCallback, useState} from 'react'
 
 export interface AudioPlayerProps {
 	character: string
 	pinyin?: string | undefined
 }
 
-export function AudioPlayer({ character, pinyin }: AudioPlayerProps) {
+export function AudioPlayer({character, pinyin}: AudioPlayerProps) {
 	const [isPlaying, setIsPlaying] = useState(false)
 	const [audioError, setAudioError] = useState<string | null>(null)
 
@@ -26,31 +26,30 @@ export function AudioPlayer({ character, pinyin }: AudioPlayerProps) {
 
 				// Try to find a Chinese voice
 				const voices = window.speechSynthesis.getVoices()
-				const chineseVoice = voices.find(voice => 
-					voice.lang.startsWith('zh') || 
-					voice.lang.includes('Chinese') ||
-					voice.name.includes('Chinese')
+				const chineseVoice = voices.find(
+					voice =>
+						voice.lang.startsWith('zh') ||
+						voice.lang.includes('Chinese') ||
+						voice.name.includes('Chinese')
 				)
-				
+
 				if (chineseVoice) {
 					utterance.voice = chineseVoice
 				}
 
 				utterance.onend = () => setIsPlaying(false)
-				utterance.onerror = (event) => {
+				utterance.onerror = _event => {
 					setIsPlaying(false)
 					setAudioError('Speech synthesis failed')
-					console.error('Speech synthesis error:', event)
 				}
 
 				window.speechSynthesis.speak(utterance)
 			} else {
 				throw new Error('Speech synthesis not supported')
 			}
-		} catch (error) {
+		} catch (_error) {
 			setIsPlaying(false)
 			setAudioError('Audio playback not available')
-			console.error('Audio playback error:', error)
 		}
 	}, [])
 
@@ -62,45 +61,75 @@ export function AudioPlayer({ character, pinyin }: AudioPlayerProps) {
 	}, [])
 
 	return (
-		<div className="space-y-4">
+		<div className='space-y-4'>
 			{/* Character Pronunciation */}
-			<div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+			<div className='flex items-center justify-between rounded-lg bg-gray-50 p-4 dark:bg-gray-700'>
 				<div>
-					<div className="text-2xl font-bold text-gray-800 dark:text-white">
+					<div className='font-bold text-2xl text-gray-800 dark:text-white'>
 						{character}
 					</div>
 					{pinyin && (
-						<div className="text-lg text-blue-600 dark:text-blue-400">
+						<div className='text-blue-600 text-lg dark:text-blue-400'>
 							{pinyin}
 						</div>
 					)}
 				</div>
-				<div className="flex space-x-2">
+				<div className='flex space-x-2'>
 					<button
-						onClick={() => playAudio(character)}
+						className='rounded-full bg-blue-600 p-3 text-white transition-colors hover:bg-blue-700 disabled:bg-gray-400'
 						disabled={isPlaying}
-						className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white p-3 rounded-full transition-colors"
-						title="Play character pronunciation"
+						onClick={() => playAudio(character)}
+						title='Play character pronunciation'
 					>
 						{isPlaying ? (
-							<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6" />
+							<svg
+								className='h-5 w-5'
+								fill='none'
+								stroke='currentColor'
+								viewBox='0 0 24 24'
+							>
+								<path
+									d='M10 9v6m4-6v6'
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									strokeWidth={2}
+								/>
 							</svg>
 						) : (
-							<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M8 6l4 6-4 6V6z" />
+							<svg
+								className='h-5 w-5'
+								fill='none'
+								stroke='currentColor'
+								viewBox='0 0 24 24'
+							>
+								<path
+									d='M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M8 6l4 6-4 6V6z'
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									strokeWidth={2}
+								/>
 							</svg>
 						)}
 					</button>
-					
+
 					{isPlaying && (
 						<button
+							className='rounded-full bg-red-600 p-3 text-white transition-colors hover:bg-red-700'
 							onClick={stopAudio}
-							className="bg-red-600 hover:bg-red-700 text-white p-3 rounded-full transition-colors"
-							title="Stop audio"
+							title='Stop audio'
 						>
-							<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 6h12v12H6z" />
+							<svg
+								className='h-5 w-5'
+								fill='none'
+								stroke='currentColor'
+								viewBox='0 0 24 24'
+							>
+								<path
+									d='M6 6h12v12H6z'
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									strokeWidth={2}
+								/>
 							</svg>
 						</button>
 					)}
@@ -110,23 +139,36 @@ export function AudioPlayer({ character, pinyin }: AudioPlayerProps) {
 			{/* Individual Character Pronunciation for Multi-character Words */}
 			{character.length > 1 && (
 				<div>
-					<h4 className="font-medium text-gray-800 dark:text-white mb-3">
+					<h4 className='mb-3 font-medium text-gray-800 dark:text-white'>
 						Individual Characters:
 					</h4>
-					<div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+					<div className='grid grid-cols-2 gap-3 sm:grid-cols-3'>
 						{Array.from(character).map((char, index) => (
-							<div key={`${char}-${index}`} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-								<span className="text-xl font-bold text-gray-800 dark:text-white">
+							<div
+								className='flex items-center justify-between rounded-lg bg-gray-50 p-3 dark:bg-gray-700'
+								key={`${char}-${index}`}
+							>
+								<span className='font-bold text-gray-800 text-xl dark:text-white'>
 									{char}
 								</span>
 								<button
-									onClick={() => playAudio(char)}
+									className='rounded-full bg-gray-600 p-2 text-white transition-colors hover:bg-gray-700 disabled:bg-gray-400'
 									disabled={isPlaying}
-									className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-400 text-white p-2 rounded-full transition-colors"
+									onClick={() => playAudio(char)}
 									title={`Play ${char} pronunciation`}
 								>
-									<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M8 6l4 6-4 6V6z" />
+									<svg
+										className='h-4 w-4'
+										fill='none'
+										stroke='currentColor'
+										viewBox='0 0 24 24'
+									>
+										<path
+											d='M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M8 6l4 6-4 6V6z'
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+										/>
 									</svg>
 								</button>
 							</div>
@@ -137,18 +179,16 @@ export function AudioPlayer({ character, pinyin }: AudioPlayerProps) {
 
 			{/* Audio Error Message */}
 			{audioError && (
-				<div className="p-3 bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg">
-					<p className="text-red-700 dark:text-red-300 text-sm">
-						{audioError}
-					</p>
+				<div className='rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-700 dark:bg-red-900'>
+					<p className='text-red-700 text-sm dark:text-red-300'>{audioError}</p>
 				</div>
 			)}
 
 			{/* Audio Info */}
-			<div className="text-xs text-gray-500 dark:text-gray-400">
+			<div className='text-gray-500 text-xs dark:text-gray-400'>
 				<p>
-					🔊 Audio pronunciation uses your browser's text-to-speech engine. 
-					For best results, ensure you have Chinese language support installed.
+					🔊 Audio pronunciation uses your browser's text-to-speech engine. For
+					best results, ensure you have Chinese language support installed.
 				</p>
 			</div>
 		</div>

@@ -11,13 +11,13 @@ interface ExampleSentence {
 	source?: string
 }
 
-export function ExampleSentences({ character }: ExampleSentencesProps) {
+export function ExampleSentences({character}: ExampleSentencesProps) {
 	// In a real implementation, these would come from an API or database
 	// For now, we'll use some sample sentences
 	const [sentences] = useState<ExampleSentence[]>(() => {
 		// Generate some example sentences based on the character
 		const exampleSentences: Record<string, ExampleSentence[]> = {
-			'你': [
+			你: [
 				{
 					chinese: '你好吗？',
 					pinyin: 'Nǐ hǎo ma?',
@@ -34,7 +34,7 @@ export function ExampleSentences({ character }: ExampleSentencesProps) {
 					english: 'Where do you live?'
 				}
 			],
-			'我': [
+			我: [
 				{
 					chinese: '我很好。',
 					pinyin: 'Wǒ hěn hǎo.',
@@ -51,7 +51,7 @@ export function ExampleSentences({ character }: ExampleSentencesProps) {
 					english: 'I love you.'
 				}
 			],
-			'好': [
+			好: [
 				{
 					chinese: '今天天气很好。',
 					pinyin: 'Jīntiān tiānqì hěn hǎo.',
@@ -63,7 +63,7 @@ export function ExampleSentences({ character }: ExampleSentencesProps) {
 					english: 'This idea is very good.'
 				}
 			],
-			'你好': [
+			你好: [
 				{
 					chinese: '你好，很高兴见到你。',
 					pinyin: 'Nǐhǎo, hěn gāoxìng jiàndào nǐ.',
@@ -75,7 +75,7 @@ export function ExampleSentences({ character }: ExampleSentencesProps) {
 					english: 'Hello, what is your name?'
 				}
 			],
-			'爱': [
+			爱: [
 				{
 					chinese: '我爱我的家人。',
 					pinyin: 'Wǒ ài wǒ de jiārén.',
@@ -87,7 +87,7 @@ export function ExampleSentences({ character }: ExampleSentencesProps) {
 					english: 'She loves reading books.'
 				}
 			],
-			'家': [
+			家: [
 				{
 					chinese: '我想回家。',
 					pinyin: 'Wǒ xiǎng huíjiā.',
@@ -132,9 +132,9 @@ export function ExampleSentences({ character }: ExampleSentencesProps) {
 		if ('speechSynthesis' in window) {
 			// Stop any ongoing speech
 			window.speechSynthesis.cancel()
-			
+
 			setPlayingIndex(index)
-			
+
 			const utterance = new SpeechSynthesisUtterance(text)
 			utterance.lang = 'zh-CN'
 			utterance.rate = 0.7
@@ -142,11 +142,10 @@ export function ExampleSentences({ character }: ExampleSentencesProps) {
 
 			// Try to find a Chinese voice
 			const voices = window.speechSynthesis.getVoices()
-			const chineseVoice = voices.find(voice => 
-				voice.lang.startsWith('zh') || 
-				voice.lang.includes('Chinese')
+			const chineseVoice = voices.find(
+				voice => voice.lang.startsWith('zh') || voice.lang.includes('Chinese')
 			)
-			
+
 			if (chineseVoice) {
 				utterance.voice = chineseVoice
 			}
@@ -162,8 +161,12 @@ export function ExampleSentences({ character }: ExampleSentencesProps) {
 		// Highlight the target character in the sentence
 		return text.split('').map((char, index) => (
 			<span
+				className={
+					char === targetChar
+						? 'rounded bg-yellow-200 px-1 dark:bg-yellow-700'
+						: ''
+				}
 				key={index}
-				className={char === targetChar ? 'bg-yellow-200 dark:bg-yellow-700 px-1 rounded' : ''}
 			>
 				{char}
 			</span>
@@ -172,9 +175,9 @@ export function ExampleSentences({ character }: ExampleSentencesProps) {
 
 	if (sentences.length === 0) {
 		return (
-			<div className="text-center py-8">
-				<div className="text-gray-400 dark:text-gray-500 text-4xl mb-4">📚</div>
-				<p className="text-gray-600 dark:text-gray-400">
+			<div className='py-8 text-center'>
+				<div className='mb-4 text-4xl text-gray-400 dark:text-gray-500'>📚</div>
+				<p className='text-gray-600 dark:text-gray-400'>
 					No example sentences available for this character yet.
 				</p>
 			</div>
@@ -182,49 +185,70 @@ export function ExampleSentences({ character }: ExampleSentencesProps) {
 	}
 
 	return (
-		<div className="space-y-4">
+		<div className='space-y-4'>
 			{sentences.map((sentence, index) => (
-				<div key={index} className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-					<div className="flex items-start justify-between mb-3">
-						<div className="flex-1">
-							<div className="text-lg font-medium text-gray-800 dark:text-white mb-1">
+				<div className='rounded-lg bg-gray-50 p-4 dark:bg-gray-700' key={index}>
+					<div className='mb-3 flex items-start justify-between'>
+						<div className='flex-1'>
+							<div className='mb-1 font-medium text-gray-800 text-lg dark:text-white'>
 								{highlightCharacter(sentence.chinese, character)}
 							</div>
-							<div className="text-blue-600 dark:text-blue-400 mb-2">
+							<div className='mb-2 text-blue-600 dark:text-blue-400'>
 								{sentence.pinyin}
 							</div>
-							<div className="text-gray-600 dark:text-gray-300">
+							<div className='text-gray-600 dark:text-gray-300'>
 								{sentence.english}
 							</div>
 							{sentence.source && (
-								<div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+								<div className='mt-2 text-gray-500 text-xs dark:text-gray-400'>
 									Source: {sentence.source}
 								</div>
 							)}
 						</div>
-						
+
 						<button
-							onClick={() => playAudio(sentence.chinese, index)}
+							className='ml-4 shrink-0 rounded-full bg-blue-600 p-2 text-white transition-colors hover:bg-blue-700 disabled:bg-gray-400'
 							disabled={playingIndex !== null}
-							className="ml-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white p-2 rounded-full transition-colors shrink-0"
-							title="Play pronunciation"
+							onClick={() => playAudio(sentence.chinese, index)}
+							title='Play pronunciation'
 						>
 							{playingIndex === index ? (
-								<svg className="w-4 h-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6" />
+								<svg
+									className='h-4 w-4 animate-pulse'
+									fill='none'
+									stroke='currentColor'
+									viewBox='0 0 24 24'
+								>
+									<path
+										d='M10 9v6m4-6v6'
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										strokeWidth={2}
+									/>
 								</svg>
 							) : (
-								<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M8 6l4 6-4 6V6z" />
+								<svg
+									className='h-4 w-4'
+									fill='none'
+									stroke='currentColor'
+									viewBox='0 0 24 24'
+								>
+									<path
+										d='M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M8 6l4 6-4 6V6z'
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										strokeWidth={2}
+									/>
 								</svg>
 							)}
 						</button>
 					</div>
 				</div>
 			))}
-			
-			<div className="text-xs text-gray-500 dark:text-gray-400 text-center">
-				💡 Tip: The highlighted character shows where "{character}" appears in each sentence.
+
+			<div className='text-center text-gray-500 text-xs dark:text-gray-400'>
+				💡 Tip: The highlighted character shows where "{character}" appears in
+				each sentence.
 			</div>
 		</div>
 	)

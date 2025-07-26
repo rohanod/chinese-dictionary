@@ -1,13 +1,19 @@
-import {type PersonalList, updatePersonalList, deletePersonalList, addWordToList, removeWordFromList} from 'utils/storage'
-import {Link} from 'react-router'
 import {useState} from 'react'
+import {Link} from 'react-router'
+import {
+	addWordToList,
+	deletePersonalList,
+	type PersonalList,
+	removeWordFromList,
+	updatePersonalList
+} from 'utils/storage'
 
 export interface PersonalListCardProps {
 	list: PersonalList
 	onUpdate: () => void
 }
 
-export function PersonalListCard({ list, onUpdate }: PersonalListCardProps) {
+export function PersonalListCard({list, onUpdate}: PersonalListCardProps) {
 	const [isEditing, setIsEditing] = useState(false)
 	const [editName, setEditName] = useState(list.name)
 	const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
@@ -16,7 +22,7 @@ export function PersonalListCard({ list, onUpdate }: PersonalListCardProps) {
 
 	const handleSaveEdit = () => {
 		if (editName.trim() && editName.trim() !== list.name) {
-			updatePersonalList(list.id, { name: editName.trim() })
+			updatePersonalList(list.id, {name: editName.trim()})
 			onUpdate()
 		}
 		setIsEditing(false)
@@ -53,30 +59,29 @@ export function PersonalListCard({ list, onUpdate }: PersonalListCardProps) {
 	}
 
 	return (
-		<div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+		<div className='rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800'>
 			{/* Header */}
-			<div className="flex items-center justify-between mb-4">
+			<div className='mb-4 flex items-center justify-between'>
 				{isEditing ? (
-					<div className="flex-1 mr-2">
+					<div className='mr-2 flex-1'>
 						<input
-							type="text"
-							value={editName}
-							onChange={(e) => setEditName(e.target.value)}
-							className="w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+							className='w-full rounded border border-gray-300 bg-white px-2 py-1 text-gray-900 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white'
 							maxLength={50}
-							autoFocus
-							onKeyPress={(e) => e.key === 'Enter' && handleSaveEdit()}
+							onChange={e => setEditName(e.target.value)}
+							onKeyPress={e => e.key === 'Enter' && handleSaveEdit()}
+							type='text'
+							value={editName}
 						/>
-						<div className="flex space-x-2 mt-2">
+						<div className='mt-2 flex space-x-2'>
 							<button
+								className='text-green-600 text-sm hover:text-green-700'
 								onClick={handleSaveEdit}
-								className="text-green-600 hover:text-green-700 text-sm"
 							>
 								Save
 							</button>
 							<button
+								className='text-gray-600 text-sm hover:text-gray-700'
 								onClick={handleCancelEdit}
-								className="text-gray-600 hover:text-gray-700 text-sm"
 							>
 								Cancel
 							</button>
@@ -84,26 +89,46 @@ export function PersonalListCard({ list, onUpdate }: PersonalListCardProps) {
 					</div>
 				) : (
 					<>
-						<h3 className="text-lg font-semibold text-gray-800 dark:text-white truncate">
+						<h3 className='truncate font-semibold text-gray-800 text-lg dark:text-white'>
 							{list.name}
 						</h3>
-						<div className="flex space-x-1 ml-2">
+						<div className='ml-2 flex space-x-1'>
 							<button
+								className='p-1 text-gray-400 hover:text-blue-600'
 								onClick={() => setIsEditing(true)}
-								className="text-gray-400 hover:text-blue-600 p-1"
-								title="Edit list name"
+								title='Edit list name'
 							>
-								<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+								<svg
+									className='h-4 w-4'
+									fill='none'
+									stroke='currentColor'
+									viewBox='0 0 24 24'
+								>
+									<path
+										d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										strokeWidth={2}
+									/>
 								</svg>
 							</button>
 							<button
+								className='p-1 text-gray-400 hover:text-red-600'
 								onClick={() => setShowDeleteConfirm(true)}
-								className="text-gray-400 hover:text-red-600 p-1"
-								title="Delete list"
+								title='Delete list'
 							>
-								<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+								<svg
+									className='h-4 w-4'
+									fill='none'
+									stroke='currentColor'
+									viewBox='0 0 24 24'
+								>
+									<path
+										d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										strokeWidth={2}
+									/>
 								</svg>
 							</button>
 						</div>
@@ -112,8 +137,10 @@ export function PersonalListCard({ list, onUpdate }: PersonalListCardProps) {
 			</div>
 
 			{/* Word Count and Date */}
-			<div className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-				<p>{list.words.length} word{list.words.length !== 1 ? 's' : ''}</p>
+			<div className='mb-4 text-gray-600 text-sm dark:text-gray-400'>
+				<p>
+					{list.words.length} word{list.words.length !== 1 ? 's' : ''}
+				</p>
 				<p>Created: {formatDate(list.createdAt)}</p>
 				{list.updatedAt !== list.createdAt && (
 					<p>Updated: {formatDate(list.updatedAt)}</p>
@@ -121,32 +148,32 @@ export function PersonalListCard({ list, onUpdate }: PersonalListCardProps) {
 			</div>
 
 			{/* Words Preview */}
-			<div className="mb-4">
+			<div className='mb-4'>
 				{list.words.length === 0 ? (
-					<p className="text-gray-500 dark:text-gray-400 text-sm italic">
+					<p className='text-gray-500 text-sm italic dark:text-gray-400'>
 						No words in this list yet
 					</p>
 				) : (
-					<div className="flex flex-wrap gap-2">
+					<div className='flex flex-wrap gap-2'>
 						{list.words.slice(0, 8).map((word, index) => (
-							<div key={index} className="group relative">
+							<div className='group relative' key={index}>
 								<Link
+									className='inline-block rounded bg-blue-100 px-2 py-1 text-blue-800 text-sm transition-colors hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:hover:bg-blue-800'
 									to={`/character/${word}`}
-									className="inline-block bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-2 py-1 rounded text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
 								>
 									{word}
 								</Link>
 								<button
+									className='-top-1 -right-1 absolute flex hidden h-4 w-4 items-center justify-center rounded-full bg-red-500 text-white text-xs group-hover:block'
 									onClick={() => handleRemoveWord(word)}
-									className="absolute -top-1 -right-1 hidden group-hover:block bg-red-500 text-white rounded-full w-4 h-4 text-xs flex items-center justify-center"
-									title="Remove from list"
+									title='Remove from list'
 								>
 									×
 								</button>
 							</div>
 						))}
 						{list.words.length > 8 && (
-							<span className="text-gray-500 dark:text-gray-400 text-sm">
+							<span className='text-gray-500 text-sm dark:text-gray-400'>
 								+{list.words.length - 8} more
 							</span>
 						)}
@@ -155,39 +182,38 @@ export function PersonalListCard({ list, onUpdate }: PersonalListCardProps) {
 			</div>
 
 			{/* Add Word */}
-			<div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+			<div className='border-gray-200 border-t pt-4 dark:border-gray-700'>
 				{showAddWord ? (
-					<div className="flex space-x-2">
+					<div className='flex space-x-2'>
 						<input
-							type="text"
+							className='flex-1 rounded border border-gray-300 bg-white px-2 py-1 text-gray-900 text-sm focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white'
+							onChange={e => setNewWord(e.target.value)}
+							onKeyPress={e => e.key === 'Enter' && handleAddWord()}
+							placeholder='Enter Chinese character or word'
+							type='text'
 							value={newWord}
-							onChange={(e) => setNewWord(e.target.value)}
-							placeholder="Enter Chinese character or word"
-							className="flex-1 px-2 py-1 border border-gray-300 dark:border-gray-600 rounded focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
-							onKeyPress={(e) => e.key === 'Enter' && handleAddWord()}
-							autoFocus
 						/>
 						<button
-							onClick={handleAddWord}
+							className='rounded bg-blue-600 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-700 disabled:bg-gray-400'
 							disabled={!newWord.trim()}
-							className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-3 py-1 rounded text-sm transition-colors"
+							onClick={handleAddWord}
 						>
 							Add
 						</button>
 						<button
+							className='px-2 py-1 text-gray-600 text-sm hover:text-gray-700'
 							onClick={() => {
 								setShowAddWord(false)
 								setNewWord('')
 							}}
-							className="text-gray-600 hover:text-gray-700 px-2 py-1 text-sm"
 						>
 							Cancel
 						</button>
 					</div>
 				) : (
 					<button
+						className='w-full rounded bg-gray-100 py-2 text-gray-700 text-sm transition-colors hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
 						onClick={() => setShowAddWord(true)}
-						className="w-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded text-sm transition-colors"
 					>
 						+ Add Word
 					</button>
@@ -196,24 +222,25 @@ export function PersonalListCard({ list, onUpdate }: PersonalListCardProps) {
 
 			{/* Delete Confirmation */}
 			{showDeleteConfirm && (
-				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-					<div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm w-full">
-						<h4 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+				<div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4'>
+					<div className='w-full max-w-sm rounded-lg bg-white p-6 dark:bg-gray-800'>
+						<h4 className='mb-4 font-semibold text-gray-800 text-lg dark:text-white'>
 							Delete List
 						</h4>
-						<p className="text-gray-600 dark:text-gray-400 mb-6">
-							Are you sure you want to delete "{list.name}"? This action cannot be undone.
+						<p className='mb-6 text-gray-600 dark:text-gray-400'>
+							Are you sure you want to delete "{list.name}"? This action cannot
+							be undone.
 						</p>
-						<div className="flex justify-end space-x-3">
+						<div className='flex justify-end space-x-3'>
 							<button
+								className='px-4 py-2 text-gray-700 transition-colors hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
 								onClick={() => setShowDeleteConfirm(false)}
-								className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
 							>
 								Cancel
 							</button>
 							<button
+								className='rounded bg-red-600 px-4 py-2 text-white transition-colors hover:bg-red-700'
 								onClick={handleDeleteList}
-								className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
 							>
 								Delete
 							</button>
