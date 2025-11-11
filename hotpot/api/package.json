@@ -1,0 +1,12 @@
+{
+	"name": "api",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"start": "echo 'start'",
+		"build": "echo 'build'",
+		"predeploy": "echo 'predeploy'",
+		"deploy": "echo 'deploy'"
+	}
+}
