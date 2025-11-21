@@ -60,5 +60,3 @@ We don't need auth or anything but we need all the libraries working.
 First do the ui with mock data but still use hanziwriter for the stroke order.
 
 I have found something that will help with almost the full character page: https://github.com/kevinhu/hotpot(Cloned at ./hotpot/) and you just need to add the hanziwriter part for the animation. See how it works when you start working on the backend but for now, ONLY DO THE FRONTEND WITH MOCK DATA IN A TS FILE.
-
-Always remember that the main is at starter/apps/ and in that, the actual code is in (web|server)
