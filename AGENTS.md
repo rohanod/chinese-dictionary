@@ -145,3 +145,5 @@ Downloading @biomejs/wasm-nodejs@2.3.7: 6.07 MB/6.07 MB, done
 You **will** analyse hotpot to see how the dictionary works.
 
 THIS IS A TYPESCRIPT PROJECT
+
+Hotpot uses a single json file, I want a library that provides the data so that it is easy to update(you can also find an api that provides the same data as a json file)
