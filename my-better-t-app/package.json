@@ -7,15 +7,20 @@
     "packages/*"
   ],
   "scripts": {
+    "ruler:apply": "pnpm dlx @intellectronica/ruler@latest apply --local-only",
     "dev": "turbo dev",
     "build": "turbo build",
     "check-types": "turbo check-types",
     "dev:native": "turbo -F native dev",
     "dev:web": "turbo -F web dev"
   },
-  "dependencies": {},
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "zod": "^4.1.11"
+  },
   "devDependencies": {
-    "turbo": "^2.5.4"
+    "turbo": "^2.5.4",
+    "@types/node": "^22.13.11"
   },
   "packageManager": "pnpm@10.21.0"
 }

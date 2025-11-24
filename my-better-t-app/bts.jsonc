@@ -3,25 +3,25 @@
 
 {
   "$schema": "https://r2.better-t-stack.dev/schema.json",
-  "version": "3.5.3",
-  "createdAt": "2025-11-22T13:30:50.844Z",
+  "version": "3.6.0",
+  "createdAt": "2025-11-24T09:52:07.489Z",
   "database": "none",
   "orm": "none",
-  "backend": "none",
+  "backend": "self",
   "runtime": "none",
   "frontend": [
     "next"
   ],
   "addons": [
     "pwa",
-    "tauri",
+    "ruler",
     "turborepo"
   ],
   "examples": [],
   "auth": "none",
   "packageManager": "pnpm",
   "dbSetup": "none",
-  "api": "none",
+  "api": "trpc",
   "webDeploy": "none",
   "serverDeploy": "none"
 }

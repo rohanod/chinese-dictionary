@@ -1,6 +1,6 @@
 # my-better-t-app
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, and more.
+This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Self, TRPC, and more.
 
 ## Features
 
@@ -8,8 +8,8 @@ This project was created with [Better-T-Stack](https://github.com/AmanVarshney01
 - **Next.js** - Full-stack React framework
 - **TailwindCSS** - Utility-first CSS for rapid UI development
 - **shadcn/ui** - Reusable UI components
+- **tRPC** - End-to-end type-safe APIs
 - **PWA** - Progressive Web App support
-- **Tauri** - Build native desktop applications
 - **Turborepo** - Optimized monorepo build system
 
 ## Getting Started
@@ -27,7 +27,7 @@ Then, run the development server:
 pnpm run dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001) in your browser to see the web application.
+Open [http://localhost:3001](http://localhost:3001) in your browser to see your fullstack application.
 
 
 
@@ -40,15 +40,15 @@ Open [http://localhost:3001](http://localhost:3001) in your browser to see the w
 ```
 my-better-t-app/
 ├── apps/
-│   ├── web/         # Frontend application (Next.js)
+│   └── web/         # Fullstack application (Next.js)
+├── packages/
+│   ├── api/         # API layer / business logic
+│   └── db/          # Database schema & queries
 ```
 
 ## Available Scripts
 
 - `pnpm run dev`: Start all applications in development mode
 - `pnpm run build`: Build all applications
-- `pnpm run dev:web`: Start only the web application
 - `pnpm run check-types`: Check TypeScript types across all apps
 - `cd apps/web && pnpm run generate-pwa-assets`: Generate PWA assets
-- `cd apps/web && pnpm run desktop:dev`: Start Tauri desktop app in development
-- `cd apps/web && pnpm run desktop:build`: Build Tauri desktop app
