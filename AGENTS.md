@@ -146,4 +146,4 @@ You **will** analyse hotpot to see how the dictionary works.
 
 THIS IS A TYPESCRIPT PROJECT
 
-Make sure to copy the search_data.json building scripts from hotpot and convert them to js scripts (in the my-better-t-app/package.json or pnpm-workspace.yaml file)
+Make sure to copy the search_data.json building scripts from hotpot and make it just one script to compile everything. I think we should compile into the .bin model so that we can mimick hotpot's search techniques.
