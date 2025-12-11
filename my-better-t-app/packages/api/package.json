@@ -19,7 +19,7 @@
   "dependencies": {
     "@trpc/server": "catalog:",
     "@trpc/client": "catalog:",
-    "next": "15.5.4",
+    "next": "15.5.8",
     "dotenv": "^17.2.2",
     "zod": "^4.1.11"
   }
