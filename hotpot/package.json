@@ -8,7 +8,7 @@
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
     "flexsearch": "^0.7.21",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "pinyinize": "^3.3.1",
     "query-string": "^7.0.1",
     "react": "^16.14.0",
