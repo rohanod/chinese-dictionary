@@ -61,13 +61,10 @@ I have found something that will help with almost the full character page: https
 
 I basically want a hotpot clone but with better looks and hanziwriter for the stroke order stuff.
 
-I have the starter app at my-better-t-app/
-
-
 You **will** analyse hotpot to see how the dictionary works.
-
-THIS IS A TYPESCRIPT PROJECT
 
 Make sure to copy the search_data.json building scripts from hotpot and make it just one script to compile everything. I think we should compile into the .bin model so that we can mimick hotpot's search techniques. You can also use this https://raw.githubusercontent.com/longjiang/hsk-dictionary/refs/heads/master/data/hanzi.json.
 
 I want one or 2 data files sent to the client and then everythign will be done client side. So we need to compile the data into a format that is easy to search through and also not too big. We can use the same techniques as hotpot to do this.
+
+I want a typescript react vite project. Use bun as the package manager and if you need a backend(which you shouldn't), use bun.
