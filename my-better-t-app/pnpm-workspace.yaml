@@ -1,6 +1,0 @@
-packages:
-  - apps/*
-  - packages/*
-catalog:
-  "@trpc/server": ^11.5.0
-  "@trpc/client": ^11.5.0
