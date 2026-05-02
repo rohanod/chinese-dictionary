@@ -60,7 +60,9 @@ We don't need auth or anything but we need all the libraries working.
 I have found something that will help with almost the full character page: https://github.com/kevinhu/hotpot(Cloned at ./hotpot/) and you just need to add the hanziwriter part for the animation. See how it works when you start working on the backend 
 
 I basically want a hotpot clone but with better looks and hanziwriter for the stroke order stuff.
-```
+
+I have the starter app at my-better-t-app/
+
 
 You **will** analyse hotpot to see how the dictionary works.
 
